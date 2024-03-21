@@ -32,13 +32,15 @@ class DiceFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_dice, container, false).apply {
-            findViewById<Button>(R.id.rollButton).setOnClickListener {
+        val view = inflater.inflate(R.layout.fragment_dice, container, false)
+        viewModel = ViewModelProvider(requireActivity())[DiceViewModel::class.java]
 
-                // Generate random number
-                (Random.nextInt(sides!!) + 1).toString()
-            }
+        val rollButton = view.findViewById<Button>(R.id.rollButton)
+        rollButton.setOnClickListener {
+            viewModel.rollDice(6)
         }
+
+        return view
     }
 
     companion object {
